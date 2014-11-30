@@ -60,7 +60,7 @@ class wfCache {
 					}
 				}
 			}
-			ob_start('wfCache::obComplete'); //Setup routine to store the file
+			add_action('wp', 'wfCache::obStart'); //Setup routine to store the file
 		}
 	}
 	public static function redirectFilter($status){
@@ -126,6 +126,9 @@ class wfCache {
 			return true;
 		}
 		return false;
+	}
+	public static function obStart(){
+		ob_start('wfCache::obComplete'); 
 	}
 	public static function obComplete($buffer = ''){
 		if(function_exists('is_404') && is_404()){
